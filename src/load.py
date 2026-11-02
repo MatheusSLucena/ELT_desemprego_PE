@@ -12,7 +12,10 @@ load_dotenv()
 class Load():
     def __init__(self):
         self.access_neon = os.getenv("URL_NEON")
-        self.neon_engine = create_engine(self.access_neon,echo=False,pool_size=5,pool_pre_ping=True)
+        if self.access_neon and self.access_neon.strip():
+            self.neon_engine = create_engine(self.access_neon, echo=False, pool_size=5, pool_pre_ping=True)
+        else:
+            self.neon_engine = None
 
     def load_json(self, nome_doc ,data):
         with open(f"{nome_doc}.json",'w',encoding='utf-8') as file:
